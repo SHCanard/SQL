@@ -10,7 +10,7 @@ EXEC sp_add_jobstep
     @step_name = N'Stop Login Auditing',  
     @subsystem = N'TSQL',  
     @command = N'ALTER SERVER AUDIT [DBLoginAudit] WITH (STATE = OFF)',   
-	@on_success_action = 3,  
+    @on_success_action = 3,  
     @retry_attempts = 5,  
     @retry_interval = 5 ;  
 GO  
@@ -23,15 +23,15 @@ EXEC sp_add_jobstep
     @retry_interval = 5 ;  
 GO
 EXEC dbo.sp_add_schedule  
-    @schedule_name = N'Daily',  
+    @schedule_name = N'Daily Restart Login Auditing',  
     @freq_type = 4,  
-	@freq_interval = 1,  
+    @freq_interval = 1,  
     @active_start_time = 235959 ;  
 USE msdb ;  
 GO  
 EXEC sp_attach_schedule  
    @job_name = N'Restart Login Auditing',  
-   @schedule_name = N'Daily';  
+   @schedule_name = N'Daily Restart Login Auditing';  
 GO  
 EXEC dbo.sp_add_jobserver  
     @job_name = N'Restart Login Auditing';  
