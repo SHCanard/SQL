@@ -1,4 +1,5 @@
 --- Set up a daily job to restart auditing at 23:59:59
+--- Dirty way to rotate sqlaudit files daily
 
 USE msdb ;  
 GO  
