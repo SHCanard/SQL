@@ -40,6 +40,7 @@ spec:
       pv: local
   storageClassName: hostpath
 ---
+# We are using a NodePort here
 apiVersion: v1
 kind: Service
 metadata:
@@ -51,7 +52,7 @@ spec:
     - protocol: TCP
       port: 31433
       targetPort: 1433
-	  nodePort: 31433
+      nodePort: 31433
   type: NodePort
 ---
 apiVersion: apps/v1
