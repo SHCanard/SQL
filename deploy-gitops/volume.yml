@@ -1,0 +1,33 @@
+---
+# https://kubernetes.io/docs/concepts/storage/volumes/#local
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: volumes-local-persistent-volume
+  labels:
+    pv: local
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: hostpath
+  local:
+    path: /opt/mssql
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mssql-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  selector:
+    matchLabels:
+      pv: local
+  storageClassName: hostpath
