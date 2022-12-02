@@ -1,6 +1,7 @@
-# Executed on the audited server, moves audit files to the input dir of the server sotcking audits in DB
+Invoke-Sqlcmd -Query "ALTER SERVER AUDIT [DB1LoginAudit] WITH (STATE = OFF)"
+robocopy "D:\Login" "\\auditdbserver\IN\DB1\Login" /mov 
+Invoke-Sqlcmd -Query "ALTER SERVER AUDIT [DB1LoginAudit] WITH (STATE = ON)"
 
-robocopy "D:\Login" "\\auditdbserver\IN\DB1\Login" /mov /minlad:1
-robocopy "D:\Query" "\\auditdbserver\IN\DB1\Query" /mov /minlad:1
-
-# /minlad:<n>	Excludes files with a Last Access Date newer than n days or specified date. If n is less than 1900, then n is expressed in days. Otherwise, n is a date expressed as YYYYMMDD.
+Invoke-Sqlcmd -Query "ALTER SERVER AUDIT [DB1QueryAudit] WITH (STATE = OFF)"
+robocopy "D:\Query" "\\auditdbserver\IN\DB1\Query" /mov
+Invoke-Sqlcmd -Query "ALTER SERVER AUDIT [DB1QueryAudit] WITH (STATE = ON)"
