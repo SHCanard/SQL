@@ -1,12 +1,15 @@
 ---
--- Failed logins gauge
+-- Successful logins gauge (%)
 ---
 
-SELECT COUNT(*)
+SELECT (SELECT CONVERT(decimal(9,2),COUNT(*))
 FROM [DB_Audit].[dbo].[SQLAUDIT_LOGIN]
-WHERE succeeded = 'false'
+WHERE succeeded = 'true'
 AND server_principal_name != ''
-AND $__timeFilter([event_time])
+AND $__timeFilter([event_time])) / (SELECT CONVERT(decimal(9,2),COUNT(*))
+FROM [DB_Audit].[dbo].[SQLAUDIT_LOGIN]
+WHERE server_principal_name != ''
+AND $__timeFilter([event_time])) * 100
 
 ---
 -- Failed logins table
