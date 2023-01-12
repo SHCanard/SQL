@@ -4,6 +4,10 @@
 #Set the execution to stop after an error occurred
 $ErrorActionPreference = 'Stop'
 
+#Get Current month and year
+$month = (Get-Date).Month
+$year = (Get-Date).Year
+
 ## Import Login Audit logs
 
 # Connect to the SQL server
@@ -24,9 +28,9 @@ Try
 Catch
 {
     # Log the error message to the log file
-    Add-Content -Path "$PSScriptRoot/LoginAuditLogs_errors.log" -Value $(Get-Date)
-    Add-Content -Path "$PSScriptRoot/LoginAuditLogs_errors.log" -Value $Error[0]
-    Add-Content -Path "$PSScriptRoot/LoginAuditLogs_errors.log" -Value "---"
+    Add-Content -Path "$PSScriptRoot/logs/$year-$month.LoginAuditLogs_errors.log" -Value $(Get-Date)
+    Add-Content -Path "$PSScriptRoot/logs/$year-$month.LoginAuditLogs_errors.log" -Value $Error[0]
+    Add-Content -Path "$PSScriptRoot/logs/$year-$month.LoginAuditLogs_errors.log" -Value "---"
     move D:\IN\DB\Login\*.* D:\OUT\KO
 }
 Finally
@@ -36,7 +40,7 @@ Finally
 }
 
 # Log a success message to the log file
-Add-Content -Path "$PSScriptRoot/LoginAuditLogs_success.log" -Value $(Get-Date)
-Add-Content -Path "$PSScriptRoot/LoginAuditLogs_success.log" -Value "Insert procedure successful, $rowsInserted rows inserted"
-Add-Content -Path "$PSScriptRoot/LoginAuditLogs_success.log" -Value "---"
+Add-Content -Path "$PSScriptRoot/logs/$year-$month.LoginAuditLogs_success.log" -Value $(Get-Date)
+Add-Content -Path "$PSScriptRoot/logs/$year-$month.LoginAuditLogs_success.log" -Value "Insert procedure successful, $rowsInserted rows inserted"
+Add-Content -Path "$PSScriptRoot/logs/$year-$month.LoginAuditLogs_success.log" -Value "---"
 move D:\IN\DB\Login\*.* D:\OUT\OK
