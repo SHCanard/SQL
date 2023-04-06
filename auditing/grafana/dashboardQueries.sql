@@ -17,10 +17,10 @@ AND $__timeFilter([event_time])) * 100
 
 SELECT [event_time]
       ,[succeeded]
-      ,[server_principal_name]
-      ,[server_instance_name]
-      ,[statement]
-      ,[client_ip]
+      ,CONCAT(LEFT([server_principal_name], LEN([server_principal_name])-4), REPLICATE('*', 4)) as [server_principal_name]
+      ,CONCAT(LEFT([server_instance_name], LEN([server_instance_name])-4), REPLICATE('*', 4)) as [server_instance_name]
+      /*,[statement]*/
+      ,CONCAT(LEFT([client_ip], LEN([client_ip])-6), REPLICATE('*', 6)) as [client_ip]
       ,[application_name]
   FROM [DB_Audit].[dbo].[SQLAUDIT_LOGIN]
   WHERE succeeded = 'false'
@@ -34,7 +34,7 @@ SELECT [event_time]
 SELECT
   $__timeEpoch([event_time]),
   [sequence_number] as value,
-  [server_principal_name] as metric
+  CONCAT(LEFT([server_principal_name], LEN([server_principal_name])-4), REPLICATE('*', 4)) as metric
 FROM
   [DB_Audit].[dbo].[SQLAUDIT_LOGIN]
 WHERE
@@ -60,7 +60,7 @@ SELECT COUNT(*)
 ---
 
   SELECT event_time
-    ,server_principal_name
+    ,CONCAT(LEFT([server_principal_name], LEN([server_principal_name])-4), REPLICATE('*', 4)) as [server_principal_name]
     ,SCHEMA_NAME
     ,object_name
     ,statement
