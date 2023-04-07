@@ -10,7 +10,6 @@ if (!$FullVersion)
     {
     	$FullVersion=Invoke-Sqlcmd -ServerInstance "localhost\$FirstInstance" -Query "SELECT @@VERSION;" -QueryTimeout 3
     }
-    $FullVersion=Invoke-Sqlcmd -ServerInstance "localhost\$FirstInstance" -Query "SELECT @@VERSION;" -QueryTimeout 3
 }
 
 # If Version is found
