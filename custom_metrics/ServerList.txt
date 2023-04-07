@@ -1,0 +1,12 @@
+# For each of the following applications, list servers running that application
+# below the [] line, on a separate line per server.
+# Lines starting with # are comments and will be ignored.
+
+[sql_servers]
+serversql1
+serversql2
+serversql3
+
+[app_servers]
+serverapp1
+serverapp2
