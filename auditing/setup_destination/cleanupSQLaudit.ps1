@@ -3,7 +3,7 @@ $month = (Get-Date).Month
 $year = (Get-Date).Year
 
 # Set the root directory to search for files
-$rootDirectory = "D:\OUT"
+$rootDirectory = "D:\OUT\OK"
 
 # Set the age threshold for deleting files (3 months)
 $ageThreshold = (Get-Date).AddMonths(-3)
@@ -15,21 +15,15 @@ $oldFiles = Get-ChildItem $rootDirectory -File | Where-Object { $_.LastWriteTime
 Add-Content -Path "$PSScriptRoot/logs/$year-$month.cleanupSQLaudit.log" -Value $(Get-Date)
 Add-Content -Path "$PSScriptRoot/logs/$year-$month.cleanupSQLaudit.log" -Value $rootDirectory
 
-# Iterate through each subdirectory
-foreach ($subDirectory in $subDirectories)
-{
-    # Get all files in the subdirectory that are older than the age threshold
-    $oldFiles = Get-ChildItem $subDirectory.FullName -File | Where-Object { $_.LastWriteTime -lt $ageThreshold }
 
-    # Iterate through each old file
-    foreach ($oldFile in $oldFiles)
+# Iterate through each old file
+foreach ($oldFile in $oldFiles)
     {
         # Delete the old file
-        Remove-Item $oldFile.FullName -Force
+        Remove-Item $rootDirectory\$oldFile -Force
 
           # Log the file deletion to the log file
-        Add-Content -Path "$PSScriptRoot/logs/$year-$month.cleanupSQLaudit.log" -Value "Deleted file $oldFile.FullName"
+        Add-Content -Path "$PSScriptRoot/logs/$year-$month.cleanupSQLaudit.log" -Value "Deleted file $oldFile"
     }
-}
 
 Add-Content -Path "$PSScriptRoot/logs/$year-$month.cleanupSQLaudit.log" -Value "---"
