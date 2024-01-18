@@ -8,6 +8,9 @@ $year = (Get-Date).Year
 # Calculate the date threshold (1 year ago)
 $dateThreshold = (Get-Date).AddYears(-1)
 
+# Convert the date to the desired format
+$formattedDateThreshold = $dateThreshold.ToString("yyyy-MM-dd HH:mm:ss")
+
 # Connect to the SQL server
 $conn = New-Object System.Data.SqlClient.SqlConnection
 $conn.ConnectionString = "Server=localhost;Database=DB_Audit;Trusted_Connection=True;"
@@ -16,12 +19,12 @@ $conn.Open()
 # Create the SQL command to execute the delete procedure on Login
 $cmdLogin = New-Object System.Data.SqlClient.SqlCommand
 $cmdLogin.Connection = $conn
-$cmdLogin.CommandText = "DELETE FROM SQLAUDIT_LOGIN WHERE event_time < '$dateThreshold'"
+$cmdLogin.CommandText = "DELETE FROM SQLAUDIT_LOGIN WHERE event_time < '$formattedDateThreshold'"
 
 # Create the SQL command to execute the delete procedure on Query
 $cmdQuery = New-Object System.Data.SqlClient.SqlCommand
 $cmdQuery.Connection = $conn
-$cmdQuery.CommandText = "DELETE FROM SQLAUDIT_QUERY WHERE event_time < '$dateThreshold'"
+$cmdQuery.CommandText = "DELETE FROM SQLAUDIT_QUERY WHERE event_time < '$formattedDateThreshold'"
 
 # Execute the delete procedure on Login
 Try
