@@ -5,6 +5,9 @@ $ErrorActionPreference = 'Stop'
 $month = (Get-Date).Month
 $year = (Get-Date).Year
 
+# Calculate the date threshold (1 year ago)
+$dateThreshold = (Get-Date).AddYears(-1)
+
 # Connect to the SQL server
 $conn = New-Object System.Data.SqlClient.SqlConnection
 $conn.ConnectionString = "Server=localhost;Database=DB_Audit;Trusted_Connection=True;"
